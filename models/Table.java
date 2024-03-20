@@ -19,7 +19,12 @@ public class Table {
         return reservations;
     }
 
-    public Table(){
+    public void delReservation(Reservation reservation)
+    {
+        this.reservations.remove(reservation);
+    }
+
+    public Table(){ 
         no = ++counter;
     }
 

@@ -1,8 +1,10 @@
 package oopl5.views;
 
+import oopl5.models.Reservation;
 import oopl5.models.Table;
 import oopl5.presenters.View;
 import oopl5.presenters.ViewObserver;
+import oopl5.presenters.Model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,13 +29,21 @@ public class BookingView implements View {
     }
 
     @Override
-    public void showReservationTableResult(int reservationNo) {
+    public void showReservationTableResult(int reservationNo, Collection<Table> tables) {
         if (reservationNo > 0){
             System.out.printf("Столик успешно забронирован. Номер брони: #%d\n", reservationNo);
         }
         else {
             System.out.println("Произошла ошибка при попытке забронировать столик.\nПовторите операцию позже.");
         }
+
+
+        for (Table table : tables) {
+              for (Reservation reservation : table.getReservations()) {
+                System.out.println(reservation);
+            }
+        }
+
     }
 
 
@@ -47,6 +57,15 @@ public class BookingView implements View {
     }
 
     public void changeReservationTable(int oldReservation, Date reservationDate, int tableNo, String name){
+        if (observers != null)
+        {
+            for (ViewObserver observer : observers){
+                observer.onChangeReservationTable( oldReservation, reservationDate , tableNo, name);
+
+             
+            }
+        }
+    
 
     }
 

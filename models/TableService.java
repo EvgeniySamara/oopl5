@@ -40,20 +40,40 @@ public class TableService implements Model {
     @Override
     public int changeReservationTable(int reservId, Date newReservationDate, int tableNo, String name) {
         for (Table table : tables) {
-            if (table.getNo() == tableNo) {
-
-                Collection<Reservation> reservations = table.getReservations();
-                for (Reservation reservation : reservations) {
-                    if (reservation.getId()==reservId)
-                    {
-                        reservations.remove(reservation);
-                    }
-                Reservation reservation = new Reservation(table, reservationDate, name);
-                table.getReservations().add(reservation);
+              for (Reservation reservation : table.getReservations()) {
+                if (reservation.getId()==reservId) {
+                    table.delReservation(reservation);
+                    for (Table newtable : tables) {
+                        if (newtable.getNo() == tableNo) {
+                            Reservation newreservation = new Reservation(newtable, newReservationDate, name);
+                            table.getReservations().add(newreservation);
+                            // System.out.println(newreservation.getId());
+                             return newreservation.getId();   
+                        }   
+                    }              
                 }
-                return null;//reservation.getId();
+        
             }
         }
+      
+      
+        // for (Table table : tables) {
+        //     if (table.getNo() == tableNo) {
+
+        //         Collection<Reservation> reservations = table.getReservations();
+        //         for (Reservation reservation : reservations) {
+        //             if (reservation.getId()==reservId)
+        //             {
+        //                 table.delReservation(reservation);
+        //                 //reservations.remove(reservation);
+        //             }
+        //         Reservation newreservation = new Reservation(table, newReservationDate, name);
+        //         table.getReservations().add(newreservation);
+        //         System.out.println(newreservation.getId());
+        //         return newreservation.getId();
+        //         }
+        //     }
+        // }
         throw new RuntimeException("Некорректный номер столика");
     }
 

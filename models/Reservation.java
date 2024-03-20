@@ -36,4 +36,10 @@ public class Reservation {
         return table;
     }
 
+@Override
+public String toString() {
+    
+    return String.format("Столик %d Имя %s", table.getNo(),name);
+}
+
 }

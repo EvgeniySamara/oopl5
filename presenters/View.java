@@ -10,7 +10,7 @@ public interface View {
 
     void registerObserver(ViewObserver observer);
 
-    void showReservationTableResult(int reservationNo);
+    void showReservationTableResult(int reservationNo, Collection<Table> tables);
     
 
 }
